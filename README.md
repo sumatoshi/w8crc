@@ -1,10 +1,10 @@
 # W8crc - A full-featured CRC library for Nim
 
 Features:
-* Bitwise and lookup table crcs implementation
-* Support for all parameterized crc algorithms from [CRC RevEng](https://reveng.sourceforge.io/crc-catalogue/all.htm) (except >32 for now)
-* Precomputations at compile time to speed up the calculation of parameterized crcs
-* Calculating any user-defined crc param
+* Bitwise and lookup table crc algorithms
+* Support for all parameterized crc algos from [CRC RevEng](https://reveng.sourceforge.io/crc-catalogue/all.htm) (except >32 for now)
+* Precomputations at compile time to speed up the calculation of parameterized crc algos
+* Calculating any user-defined crc
 * Calculating crc in parts (corresponding `balance` feature)
 * Calculating crc from file
 * Support for x32/x64 architectures
