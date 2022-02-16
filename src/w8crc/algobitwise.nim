@@ -148,7 +148,7 @@ func bitwiseStrAllLeft(data: string, spec: CrcSpec): uint32 =
 template crcBitwise*(data: openArray[byte], kind: Crc8Kind): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, rp, x) = (sp.init.rev8b, sp.poly.rev8b, sp.xorout)
+    const (ri, rp, x) = (rev8b(sp.init), rev8b(sp.poly), sp.xorout)
     bitwiseArrCtRigt(data, ri, rp, x)
   else:
     const (i, p, x) = (sp.init, sp.poly, sp.xorout)
@@ -157,7 +157,7 @@ template crcBitwise*(data: openArray[byte], kind: Crc8Kind): uint32 =
 template crcBitwise*(data: string, kind: Crc8Kind): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, rp, x) = (sp.init.rev8b, sp.poly.rev8b, sp.xorout)
+    const (ri, rp, x) = (rev8b(sp.init), rev8b(sp.poly), sp.xorout)
     bitwiseStrCtRigt(data, ri, rp, x)
   else:
     const (i, p, x) = (sp.init, sp.poly, sp.xorout)
@@ -166,7 +166,7 @@ template crcBitwise*(data: string, kind: Crc8Kind): uint32 =
 template crcBitwise*(data: openArray[byte], kind: Crc16Kind): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, rp, x) = (sp.init.rev16b, sp.poly.rev16b, sp.xorout)
+    const (ri, rp, x) = (rev16b(sp.init), rev16b(sp.poly), sp.xorout)
     bitwiseArrCtRigt(data, ri, rp, x)
   else:
     const (i, p, x) = (sp.init, sp.poly, sp.xorout)
@@ -175,7 +175,7 @@ template crcBitwise*(data: openArray[byte], kind: Crc16Kind): uint32 =
 template crcBitwise*(data: string, kind: Crc16Kind): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, rp, x) = (sp.init.rev16b, sp.poly.rev16b, sp.xorout)
+    const (ri, rp, x) = (rev16b(sp.init), rev16b(sp.poly), sp.xorout)
     bitwiseStrCtRigt(data, ri, rp, x)
   else:
     const (i, p, x) = (sp.init, sp.poly, sp.xorout)
@@ -184,9 +184,7 @@ template crcBitwise*(data: string, kind: Crc16Kind): uint32 =
 template crcBitwise*(data: openArray[byte], kind: Crc32Kind): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    #Error: undeclared field: 'rev32b' for type system.uint32
-    #const (ri, rp, x) = (sp.init.rev32b, sp.poly.rev32b, sp.xorout)
-    const (ri, rp, x) = (revxbits.rev32b(sp.init), revxbits.rev32b(sp.poly), sp.xorout)
+    const (ri, rp, x) = (rev32b(sp.init), rev32b(sp.poly), sp.xorout)
     bitwiseArrCtRigt(data, ri, rp, x)
   else:
     const (i, p, x) = (sp.init, sp.poly, sp.xorout)
@@ -195,9 +193,7 @@ template crcBitwise*(data: openArray[byte], kind: Crc32Kind): uint32 =
 template crcBitwise*(data: string, kind: Crc32Kind): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    #Error: undeclared field: 'rev32b' for type system.uint32
-    #const (ri, rp, x) = (sp.init.rev32b, sp.poly.rev32b, sp.xorout)
-    const (ri, rp, x) = (revxbits.rev32b(sp.init), revxbits.rev32b(sp.poly), sp.xorout)
+    const (ri, rp, x) = (rev32b(sp.init), rev32b(sp.poly), sp.xorout)
     bitwiseStrCtRigt(data, ri, rp, x)
   else:
     const (i, p, x) = (sp.init, sp.poly, sp.xorout)

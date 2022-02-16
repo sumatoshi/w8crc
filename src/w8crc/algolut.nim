@@ -91,7 +91,7 @@ template crcLut*(data: openArray[byte], kind: Crc8Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, x) = (sp.init.rev8b, sp.xorout)
+    const (ri, x) = (rev8b(sp.init), sp.xorout)
     crcLutArrCtRight(data, ri, x, lookup, prev)
   else:
     const (i, x) = (sp.init, sp.xorout)
@@ -101,7 +101,7 @@ template crcLut*(data: openArray[byte], kind: Crc8Kind, lookup: LookupLut,
 template crcLut*(data: string, kind: Crc8Kind, lookup: LookupLut): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, x) = (sp.init.rev8b, sp.xorout)
+    const (ri, x) = (rev8b(sp.init), sp.xorout)
     crcLutStrCtRight(data, ri, x, lookup)
   else:
     const (i, x) = (sp.init, sp.xorout)
@@ -112,7 +112,7 @@ template crcLut*(data: openArray[byte], kind: Crc16Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, x) = (sp.init.rev16b, sp.xorout)
+    const (ri, x) = (rev16b(sp.init), sp.xorout)
     crcLutArrCtRight(data, ri, x, lookup, prev)
   else:
     const (i, x) = (sp.init, sp.xorout)
@@ -121,7 +121,7 @@ template crcLut*(data: openArray[byte], kind: Crc16Kind, lookup: LookupLut,
 template crcLut*(data: string, kind: Crc16Kind, lookup: LookupLut): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, x) = (sp.init.rev16b, sp.xorout)
+    const (ri, x) = (rev16b(sp.init), sp.xorout)
     crcLutStrCtRight(data, ri, x, lookup)
   else:
     const (i, x) = (sp.init, sp.xorout)
@@ -131,8 +131,7 @@ template crcLut*(data: openArray[byte], kind: Crc32Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, x) = (revxbits.rev32b(sp.init), sp.xorout)
-    #const (ri, x) = (sp.init.rev32b, sp.xorout)
+    const (ri, x) = (rev32b(sp.init), sp.xorout)
     crcLutArrCtRight(data, ri, x, lookup, prev)
   else:
     const (i, x) = (sp.init, sp.xorout)
@@ -142,8 +141,7 @@ template crcLut*(data: string, kind: Crc32Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
   const sp = static: kind.takeCrcSpec()
   when sp.refin:
-    const (ri, x) = (revxbits.rev32b(sp.init), sp.xorout)
-    #const (ri, x) = (sp.init.rev32b, sp.xorout)
+    const (ri, x) = (rev32b(sp.init), sp.xorout)
     crcLutStrCtRight(data, ri, x, lookup)
   else:
     const (i, x) = (sp.init, sp.xorout)
