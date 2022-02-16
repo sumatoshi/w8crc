@@ -9,7 +9,7 @@ func bitwiseArrCtRigt(data: openArray[byte],
   var crc = revinit
   for dat in data:
     crc = crc xor dat
-    crc.updBrShr(revpoly)
+    crc.updRight(revpoly)
   result = crc xor xorout
 
 func bitwiseStrCtRigt(data: string,
@@ -17,7 +17,7 @@ func bitwiseStrCtRigt(data: string,
   var crc = revinit
   for dat in data:
     crc = crc xor cast[uint32](dat.ord)
-    crc.updBrShr(revpoly)
+    crc.updRight(revpoly)
   result = crc xor xorout
 
 func bitwiseArrCtLeft8(data: openArray[byte],
@@ -25,7 +25,7 @@ func bitwiseArrCtLeft8(data: openArray[byte],
   var crc = init
   for dat in data:
     crc = crc xor dat
-    crc.updBrShl(0x80'u32, poly, 7)
+    crc.updLeft(0x80'u32, poly, 7)
   result = (crc xor xorout) and 0xFF'u32
 
 func bitwiseStrCtLeft8(data: string,
@@ -33,7 +33,7 @@ func bitwiseStrCtLeft8(data: string,
   var crc = init
   for dat in data:
     crc = crc xor cast[uint32](dat.ord)
-    crc.updBrShl(0x80'u32, poly, 7)
+    crc.updLeft(0x80'u32, poly, 7)
   result = (crc xor xorout) and 0xFF'u32
 
 func bitwiseArrCtLeft16(data: openArray[byte],
@@ -42,7 +42,7 @@ func bitwiseArrCtLeft16(data: openArray[byte],
   for dat in data:
     let ext:uint32 = dat
     crc = crc xor (ext shl 8)
-    crc.updBrShl(0x8000'u32, poly, 15)
+    crc.updLeft(0x8000'u32, poly, 15)
   result = (crc xor xorout) and 0xFFFF'u32
 
 func bitwiseStrCtLeft16(data: string,
@@ -50,7 +50,7 @@ func bitwiseStrCtLeft16(data: string,
   var crc = init
   for dat in data:
     crc = crc xor (cast[uint32](dat.ord) shl 8)
-    crc.updBrShl(0x8000'u32, poly, 15)
+    crc.updLeft(0x8000'u32, poly, 15)
   result = (crc xor xorout) and 0xFFFF'u32
 
 func bitwiseArrCtLeft32(data: openArray[byte],
@@ -59,7 +59,7 @@ func bitwiseArrCtLeft32(data: openArray[byte],
   for dat in data:
     let ext:uint32 = dat
     crc = crc xor (ext shl 24)
-    crc.updBrShl(0x80000000'u32, poly, 31)
+    crc.updLeft(0x80000000'u32, poly, 31)
   result = crc xor xorout
 
 func bitwiseStrCtLeft32(data: string,
@@ -67,7 +67,7 @@ func bitwiseStrCtLeft32(data: string,
   var crc = init
   for dat in data:
     crc = crc xor (cast[uint32](dat.ord) shl 24)
-    crc.updBrShl(0x80000000'u32, poly, 31)
+    crc.updLeft(0x80000000'u32, poly, 31)
   result = crc xor xorout
 
 func bitwiseArrAllRight(data: openArray[byte], spec: CrcSpec): uint32 =
@@ -75,7 +75,7 @@ func bitwiseArrAllRight(data: openArray[byte], spec: CrcSpec): uint32 =
   let pol = spec.poly.revXb(spec.size)
   for dat in data:
     crc = crc xor dat
-    crc.updBrShr(pol)
+    crc.updRight(pol)
   if unlikely(spec.refoutNeeded):
     result = (crc xor spec.xorout).revXb(spec.size)
   else: result = (crc xor spec.xorout)
@@ -85,7 +85,7 @@ func bitwiseStrAllRight(data: string, spec: CrcSpec): uint32 =
   let pol = spec.poly.revXb(spec.size)
   for dat in data:
     crc = crc xor cast[uint32](dat.ord)
-    crc.updBrShr(pol)
+    crc.updRight(pol)
   if unlikely(spec.refoutNeeded):
     result = (crc xor spec.xorout).revXb(spec.size)
   else: result = (crc xor spec.xorout)
@@ -111,7 +111,7 @@ func bitwiseArrAllLeft(data: openArray[byte], spec: CrcSpec): uint32 =
   for dat in data:
     let ext:uint32 = dat
     crc = crc xor (ext shl datSlip)
-    crc.updBrShl(msb, pol, tothemoon)
+    crc.updLeft(msb, pol, tothemoon)
   crc = crc shr polSlip # shr back to mask
   if unlikely(spec.refoutNeeded):
     result = (crc xor spec.xorout).revXb(spec.size) and mask
@@ -137,7 +137,7 @@ func bitwiseStrAllLeft(data: string, spec: CrcSpec): uint32 =
   let mask = 0xFFFFFFFF'u32 shr (32 - spec.size)
   for dat in data:
     crc = crc xor (cast[uint32](dat.ord) shl datSlip)
-    crc.updBrShl(msb, pol, tothemoon)
+    crc.updLeft(msb, pol, tothemoon)
   crc = crc shr polSlip # shr back to mask
   if unlikely(spec.refoutNeeded):
     result = (crc xor spec.xorout).revXb(spec.size) and mask

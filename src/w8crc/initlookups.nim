@@ -8,28 +8,28 @@ func lutCtRight(revinit, revpoly: uint32): LookupLut =
   var crc = revinit
   for i in 0'u32..255'u32:
     crc = i
-    crc.updBrShr(revpoly)
+    crc.updRight(revpoly)
     result[i] = crc
 
 func lutCtLeft8(init, poly: uint32): LookupLut =
   var crc = init
   for i in 0'u32..255'u32:
     crc = i
-    crc.updBrShl(0x80'u32, poly, 7)
+    crc.updLeft(0x80'u32, poly, 7)
     result[i] = crc and 0xFF'u32
 
 func lutCtLeft16(init, poly: uint32): LookupLut =
   var crc = init
   for i in 0'u32..255'u32:
     crc = i shl 8
-    crc.updBrShl(0x8000'u32, poly, 15)
+    crc.updLeft(0x8000'u32, poly, 15)
     result[i] = crc and 0xFFFF'u32
 
 func lutCtLeft32(init, poly: uint32): LookupLut =
   var crc = init
   for i in 0'u32..255'u32:
     crc = i shl 24
-    crc.updBrShl(0x80000000'u32, poly, 31)
+    crc.updLeft(0x80000000'u32, poly, 31)
     result[i] = crc
 
 func lutAllRight(spec: CrcSpec): LookupLut =
@@ -37,7 +37,7 @@ func lutAllRight(spec: CrcSpec): LookupLut =
   var pol = spec.poly.revXb(spec.size)
   for i in 0'u32..255'u32:
     crc = i
-    crc.updBrShr(pol)
+    crc.updRight(pol)
     result[i] = crc
 
 func lutAllLeft(spec: CrcSpec): LookupLut =
@@ -60,7 +60,7 @@ func lutAllLeft(spec: CrcSpec): LookupLut =
   let mask = 0xFFFFFFFF'u32 shr (32 - spec.size)
   for i in 0'u32..255'u32:
     crc = i shl datSlip
-    crc.updBrShl(msb, pol, tothemoon)
+    crc.updLeft(msb, pol, tothemoon)
     crc = crc shr polSlip # shr back to mask
     result[i] = crc and mask
 
