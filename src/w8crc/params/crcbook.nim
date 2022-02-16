@@ -1167,11 +1167,11 @@ const Crc32List = [
 
 #----------------------------------- Public -----------------------------------#
 
-func takeCrcSpec*(kind: Crc8Kind): CrcSpec  {.inline.} =
+func takeCrcSpec*(kind: Crc8Kind): CrcSpec =
   Crc8List[kind]
 
-func takeCrcSpec*(kind: Crc16Kind): CrcSpec {.inline.}  =
+func takeCrcSpec*(kind: Crc16Kind): CrcSpec =
   Crc16List[kind]
 
-func takeCrcSpec*(kind: Crc32Kind): CrcSpec {.inline.}  =
+func takeCrcSpec*(kind: Crc32Kind): CrcSpec =
   Crc32List[kind]
