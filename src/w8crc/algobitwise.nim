@@ -146,7 +146,7 @@ func bitwiseStrAllLeft(data: string, spec: CrcSpec): uint32 =
 #----------------------------------- Public -----------------------------------#
 
 template crcBitwise*(data: openArray[byte], kind: Crc8Kind): uint32 =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp, x) = (rev8b(sp.init), rev8b(sp.poly), sp.xorout)
     bitwiseArrCtRigt(data, ri, rp, x)
@@ -155,7 +155,7 @@ template crcBitwise*(data: openArray[byte], kind: Crc8Kind): uint32 =
     bitwiseArrCtLeft8(data, i, p, x)
 
 template crcBitwise*(data: string, kind: Crc8Kind): uint32 =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp, x) = (rev8b(sp.init), rev8b(sp.poly), sp.xorout)
     bitwiseStrCtRigt(data, ri, rp, x)
@@ -164,7 +164,7 @@ template crcBitwise*(data: string, kind: Crc8Kind): uint32 =
     bitwiseStrCtLeft8(data, i, p, x)
 
 template crcBitwise*(data: openArray[byte], kind: Crc16Kind): uint32 =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp, x) = (rev16b(sp.init), rev16b(sp.poly), sp.xorout)
     bitwiseArrCtRigt(data, ri, rp, x)
@@ -173,7 +173,7 @@ template crcBitwise*(data: openArray[byte], kind: Crc16Kind): uint32 =
     bitwiseArrCtLeft16(data, i, p, x)
 
 template crcBitwise*(data: string, kind: Crc16Kind): uint32 =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp, x) = (rev16b(sp.init), rev16b(sp.poly), sp.xorout)
     bitwiseStrCtRigt(data, ri, rp, x)
@@ -182,7 +182,7 @@ template crcBitwise*(data: string, kind: Crc16Kind): uint32 =
     bitwiseStrCtLeft16(data, i, p, x)
 
 template crcBitwise*(data: openArray[byte], kind: Crc32Kind): uint32 =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp, x) = (rev32b(sp.init), rev32b(sp.poly), sp.xorout)
     bitwiseArrCtRigt(data, ri, rp, x)
@@ -191,7 +191,7 @@ template crcBitwise*(data: openArray[byte], kind: Crc32Kind): uint32 =
     bitwiseArrCtLeft32(data, i, p, x)
 
 template crcBitwise*(data: string, kind: Crc32Kind): uint32 =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp, x) = (rev32b(sp.init), rev32b(sp.poly), sp.xorout)
     bitwiseStrCtRigt(data, ri, rp, x)

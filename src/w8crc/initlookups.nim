@@ -67,7 +67,7 @@ func lutAllLeft(spec: CrcSpec): LookupLut =
 #----------------------------------- Public -----------------------------------#
 
 template initLookup*(kind: Crc8Kind): LookupLut =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp) = (rev8b(sp.init), rev8b(sp.poly))
     lutCtRight(ri, rp)
@@ -76,7 +76,7 @@ template initLookup*(kind: Crc8Kind): LookupLut =
     lutCtLeft8(i, p)
 
 template initLookup*(kind: Crc16Kind): LookupLut =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp) = (rev16b(sp.init), rev16b(sp.poly))
     lutCtRight(ri, rp)
@@ -85,7 +85,7 @@ template initLookup*(kind: Crc16Kind): LookupLut =
     lutCtLeft16(i, p)
 
 template initLookup*(kind: Crc32Kind): LookupLut =
-  const sp = static: kind.takeCrcSpec()
+  const sp = kind.takeCrcSpec()
   when sp.refin:
     const (ri, rp) = (rev32b(sp.init), rev32b(sp.poly))
     lutCtRight(ri, rp)
