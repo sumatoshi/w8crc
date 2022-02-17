@@ -1,6 +1,6 @@
 # Package
 
-version       = "1.0.0"
+version       = "1.0.1"
 author        = "Maxim Soeghe"
 description   = "Full-featured CRC library for Nim."
 license       = "MIT"
