@@ -1,4 +1,4 @@
-# W8crc - A full-featured CRC library for Nim
+## W8crc - A full-featured CRC library for Nim
 
 Features:
 * Bitwise and lookup table crc algorithms
