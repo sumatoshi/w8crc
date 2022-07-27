@@ -148,56 +148,62 @@ func bitwiseStrAllLeft(data: string, spec: CrcSpec): uint32 =
 template crcBitwise*(data: openArray[byte], kind: Crc8Kind): uint32 =
   const sp = takeCrcSpec(kind)
   when sp.refin:
-    const (ri, rp, x) = (rev8b(sp.init), rev8b(sp.poly), sp.xorout)
-    bitwiseArrCtRigt(data, ri, rp, x)
+    const
+      ri = rev8b(sp.init)
+      rp = rev8b(sp.poly)
+    bitwiseArrCtRigt(data, ri, rp, sp.xorout)
   else:
-    const (i, p, x) = (sp.init, sp.poly, sp.xorout)
-    bitwiseArrCtLeft8(data, i, p, x)
+    bitwiseArrCtLeft8(data, sp.init, sp.poly, sp.xorout)
 
 template crcBitwise*(data: string, kind: Crc8Kind): uint32 =
   const sp = takeCrcSpec(kind)
   when sp.refin:
-    const (ri, rp, x) = (rev8b(sp.init), rev8b(sp.poly), sp.xorout)
-    bitwiseStrCtRigt(data, ri, rp, x)
+    const
+      ri = rev8b(sp.init)
+      rp = rev8b(sp.poly)
+    bitwiseStrCtRigt(data, ri, rp, sp.xorout)
   else:
-    const (i, p, x) = (sp.init, sp.poly, sp.xorout)
-    bitwiseStrCtLeft8(data, i, p, x)
+    bitwiseStrCtLeft8(data, sp.init, sp.poly, sp.xorout)
 
 template crcBitwise*(data: openArray[byte], kind: Crc16Kind): uint32 =
   const sp = takeCrcSpec(kind)
   when sp.refin:
-    const (ri, rp, x) = (rev16b(sp.init), rev16b(sp.poly), sp.xorout)
-    bitwiseArrCtRigt(data, ri, rp, x)
+    const
+      ri = rev16b(sp.init)
+      rp = rev16b(sp.poly)
+    bitwiseArrCtRigt(data, ri, rp, sp.xorout)
   else:
-    const (i, p, x) = (sp.init, sp.poly, sp.xorout)
-    bitwiseArrCtLeft16(data, i, p, x)
+    bitwiseArrCtLeft16(data, sp.init, sp.poly, sp.xorout)
 
 template crcBitwise*(data: string, kind: Crc16Kind): uint32 =
   const sp = takeCrcSpec(kind)
   when sp.refin:
-    const (ri, rp, x) = (rev16b(sp.init), rev16b(sp.poly), sp.xorout)
-    bitwiseStrCtRigt(data, ri, rp, x)
+    const
+      ri = rev16b(sp.init)
+      rp = rev16b(sp.poly)
+    bitwiseStrCtRigt(data, ri, rp, sp.xorout)
   else:
-    const (i, p, x) = (sp.init, sp.poly, sp.xorout)
-    bitwiseStrCtLeft16(data, i, p, x)
+    bitwiseStrCtLeft16(data, sp.init, sp.poly, sp.xorout)
 
 template crcBitwise*(data: openArray[byte], kind: Crc32Kind): uint32 =
   const sp = takeCrcSpec(kind)
   when sp.refin:
-    const (ri, rp, x) = (rev32b(sp.init), rev32b(sp.poly), sp.xorout)
-    bitwiseArrCtRigt(data, ri, rp, x)
+    const
+      ri = rev32b(sp.init)
+      rp = rev32b(sp.poly)
+    bitwiseArrCtRigt(data, ri, rp, sp.xorout)
   else:
-    const (i, p, x) = (sp.init, sp.poly, sp.xorout)
-    bitwiseArrCtLeft32(data, i, p, x)
+    bitwiseArrCtLeft32(data, sp.init, sp.poly, sp.xorout)
 
 template crcBitwise*(data: string, kind: Crc32Kind): uint32 =
   const sp = takeCrcSpec(kind)
   when sp.refin:
-    const (ri, rp, x) = (rev32b(sp.init), rev32b(sp.poly), sp.xorout)
-    bitwiseStrCtRigt(data, ri, rp, x)
+    const
+      ri = rev32b(sp.init)
+      rp = rev32b(sp.poly)
+    bitwiseStrCtRigt(data, ri, rp, sp.xorout)
   else:
-    const (i, p, x) = (sp.init, sp.poly, sp.xorout)
-    bitwiseStrCtLeft32(data, i, p, x)
+    bitwiseStrCtLeft32(data, sp.init, sp.poly, sp.xorout)
 
 # rt:
 func crcBitwise*(data: openArray[byte], spec: CrcSpec): uint32 =
