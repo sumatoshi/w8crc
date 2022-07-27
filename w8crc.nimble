@@ -1,7 +1,7 @@
 # Package
 
-version       = "1.0.1"
-author        = "Maxim Soeghe"
+version       = "1.0.2"
+author        = "Maxim Cege (Цеге Максим)"
 description   = "Full-featured CRC library for Nim."
 license       = "MIT"
 srcDir        = "src"
@@ -9,7 +9,7 @@ srcDir        = "src"
 
 # Dependencies
 
-requires "nim >= 1.6.0"
+requires "nim >= 1.0.0"
 
 task test, "❌":
   echo "Use test_branched or test_branchfree instead"
