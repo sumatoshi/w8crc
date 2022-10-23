@@ -1,6 +1,6 @@
 # Package
 
-version       = "1.0.2"
+version       = "1.2.0"
 author        = "Maxim Cege (Цеге Максим)"
 description   = "Full-featured CRC library for Nim."
 license       = "MIT"
@@ -11,17 +11,33 @@ srcDir        = "src"
 
 requires "nim >= 1.0.0"
 
+proc cleandir() =
+  when (NimMajor, NimMinor, NimPatch) >= (1, 4, 0):
+    exec "nim r --hints:off tests/cleandir"
+
 task test, "❌":
-  echo "Use test_branched or test_branchfree instead"
+  echo "Use test_branched or test_branchfree instead."
 
-task test_branched, "Run all tests (branched)":
-  exec "nim c --run tests/tester"
+task test_branched, "Run all tests":
+  exec "nim c   -f --hints:off --run tests/tester"
+  exec "nim cpp -f --hints:off --run tests/tester"
+  exec "nim js  -f --hints:off --run tests/testerjs"
+  cleandir()
 
-task test_branchfree, "Run all tests (branch free)":
-  exec "nim c --run -d:useBranchFree64 tests/tester"
+task test_branchfree, "Run all tests -d:useBranchFree64 (x64 required)":
+  exec "nim c   -f --hints:off --run -d:useBranchFree64 tests/tester"
+  exec "nim cpp -f --hints:off --run -d:useBranchFree64 tests/tester"
+  exec "nim js  -f --hints:off --run -d:useBranchFree64 tests/testerjs"
+  cleandir()
 
-task test_cpp, "Run all tests (cpp)":
-  exec "nim cpp --run tests/tester"
+task test_c_values, "Run C tests and print result to stdout (x64 required)":
+  exec "nim c -f --hints:off --run -d:debugResult tests/tester"
+  cleandir()
 
-task test_js, "Run js tests":
-  exec "nim c --run tests/testerjs"
+task test_cpp_values, "Run C++ tests and print result to stdout (x64 required)":
+  exec "nim cpp -f --hints:off --run -d:debugResult tests/tester"
+  cleandir()
+
+task test_js_values, "Run Js tests and print result to stdout (x64 required)":
+  exec "nim js -f --hints:off --run -d:debugResult tests/testerjs"
+  cleandir()
