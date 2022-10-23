@@ -157,64 +157,124 @@ func bitwiseStrAllLeft(data: string, spec: CrcSpec): uint32 =
 #----------------------------------- Public -----------------------------------#
 
 template crcBitwise*(data: openArray[byte], kind: Crc8Kind): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev8b(sp.init)
-      rp = rev8b(sp.poly)
-    bitwiseArrCtRigt(data, ri, rp, sp.xorout)
+      ri = revxbits.rev8b(crcspec.init(sp))
+      rp = revxbits.rev8b(crcspec.poly(sp))
+    bitwiseArrCtRigt(
+      data,
+      ri,
+      rp,
+      crcspec.xorout(sp)
+    )
   else:
-    bitwiseArrCtLeft8(data, sp.init, sp.poly, sp.xorout)
+    bitwiseArrCtLeft8(
+      data,
+      crcspec.init(sp),
+      crcspec.poly(sp),
+      crcspec.xorout(sp)
+    )
 
 template crcBitwise*(data: string, kind: Crc8Kind): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev8b(sp.init)
-      rp = rev8b(sp.poly)
-    bitwiseStrCtRigt(data, ri, rp, sp.xorout)
+      ri = revxbits.rev8b(crcspec.init(sp))
+      rp = revxbits.rev8b(crcspec.poly(sp))
+    bitwiseStrCtRigt(
+      data,
+      ri,
+      rp,
+      crcspec.xorout(sp)
+    )
   else:
-    bitwiseStrCtLeft8(data, sp.init, sp.poly, sp.xorout)
+    bitwiseStrCtLeft8(
+      data,
+      crcspec.init(sp),
+      crcspec.poly(sp),
+      crcspec.xorout(sp)
+    )
 
 template crcBitwise*(data: openArray[byte], kind: Crc16Kind): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev16b(sp.init)
-      rp = rev16b(sp.poly)
-    bitwiseArrCtRigt(data, ri, rp, sp.xorout)
+      ri = revxbits.rev16b(crcspec.init(sp))
+      rp = revxbits.rev16b(crcspec.poly(sp))
+    bitwiseArrCtRigt(
+      data,
+      ri,
+      rp,
+      crcspec.xorout(sp)
+    )
   else:
-    bitwiseArrCtLeft16(data, sp.init, sp.poly, sp.xorout)
+    bitwiseArrCtLeft16(
+      data,
+      crcspec.init(sp),
+      crcspec.poly(sp),
+      crcspec.xorout(sp)
+    )
 
 template crcBitwise*(data: string, kind: Crc16Kind): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev16b(sp.init)
-      rp = rev16b(sp.poly)
-    bitwiseStrCtRigt(data, ri, rp, sp.xorout)
+      ri = revxbits.rev16b(crcspec.init(sp))
+      rp = revxbits.rev16b(crcspec.poly(sp))
+    bitwiseStrCtRigt(
+      data,
+      ri,
+      rp,
+      crcspec.xorout(sp)
+    )
   else:
-    bitwiseStrCtLeft16(data, sp.init, sp.poly, sp.xorout)
+    bitwiseStrCtLeft16(
+      data,
+      crcspec.init(sp),
+      crcspec.poly(sp),
+      crcspec.xorout(sp)
+    )
 
 template crcBitwise*(data: openArray[byte], kind: Crc32Kind): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev32b(sp.init)
-      rp = rev32b(sp.poly)
-    bitwiseArrCtRigt(data, ri, rp, sp.xorout)
+      ri = revxbits.rev32b(crcspec.init(sp))
+      rp = revxbits.rev32b(crcspec.poly(sp))
+    bitwiseArrCtRigt(
+      data,
+      ri,
+      rp,
+      crcspec.xorout(sp)
+    )
   else:
-    bitwiseArrCtLeft32(data, sp.init, sp.poly, sp.xorout)
+    bitwiseArrCtLeft32(
+      data,
+      crcspec.init(sp),
+      crcspec.poly(sp),
+      crcspec.xorout(sp)
+    )
 
 template crcBitwise*(data: string, kind: Crc32Kind): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev32b(sp.init)
-      rp = rev32b(sp.poly)
-    bitwiseStrCtRigt(data, ri, rp, sp.xorout)
+      ri = revxbits.rev32b(crcspec.init(sp))
+      rp = revxbits.rev32b(crcspec.poly(sp))
+    bitwiseStrCtRigt(
+      data,
+      ri,
+      rp,
+      crcspec.xorout(sp)
+    )
   else:
-    bitwiseStrCtLeft32(data, sp.init, sp.poly, sp.xorout)
+    bitwiseStrCtLeft32(
+      data,
+      crcspec.init(sp),
+      crcspec.poly(sp),
+      crcspec.xorout(sp)
+    )
 
 # rt:
 func crcBitwise*(data: openArray[byte], spec: CrcSpec): uint32 =

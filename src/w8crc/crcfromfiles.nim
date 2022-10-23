@@ -49,8 +49,8 @@ proc crcFFLutLeft(path: string, spec: CrcSpec, lookup: LookupLut,
 
 template crcFromFile*(path: string, kind: Crc8Kind | Crc16Kind | Crc32Kind,
                       lookup: LookupLut, bufferSize: static[Positive] = 8192): uint32 =
-  const spec = takeCrcSpec(kind)
-  when spec.refin:
+  const spec = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(spec):
     crcFFLutRight(path, spec, lookup, bufferSize)
   else:
     crcFFLutLeft(path, spec, lookup, bufferSize)

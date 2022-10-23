@@ -89,57 +89,129 @@ func crcLutStrAllLeft(data: string, spec: CrcSpec, lookup: LookupLut): uint32 =
 
 template crcLut*(data: openArray[byte], kind: Crc8Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
-    const ri = rev8b(sp.init)
-    crcLutArrCtRight(data, ri, sp.xorout, lookup, prev)
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
+    const ri = revxbits.rev8b(crcspec.init(sp))
+    crcLutArrCtRight(
+      data,
+      ri,
+      crcspec.xorout(sp),
+      lookup,
+      prev
+    )
   else:
-    # no need additional proc algo remains the same
-    crcLutArrCtRight(data, sp.init, sp.xorout, lookup, prev)
+    crcLutArrCtRight( # algo remains the same
+      data,
+      crcspec.init(sp),
+      crcspec.xorout(sp),
+      lookup,
+      prev
+    )
 
 template crcLut*(data: string, kind: Crc8Kind, lookup: LookupLut): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
-    const ri = rev8b(sp.init)
-    crcLutStrCtRight(data, ri, sp.xorout, lookup)
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
+    const ri = revxbits.rev8b(crcspec.init(sp))
+    crcLutStrCtRight(
+      data,
+      ri,
+      crcspec.xorout(sp),
+      lookup
+    )
   else:
-    # no need additional proc algo remains the same
-    crcLutStrCtRight(data, sp.init, sp.xorout, lookup)
+    crcLutStrCtRight(
+      data,
+      crcspec.init(sp),
+      crcspec.xorout(sp),
+      lookup
+    )
 
 template crcLut*(data: openArray[byte], kind: Crc16Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
-    const ri = rev16b(sp.init)
-    crcLutArrCtRight(data, ri, sp.xorout, lookup, prev)
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
+    const ri = revxbits.rev16b(crcspec.init(sp))
+    crcLutArrCtRight(
+      data,
+      ri,
+      crcspec.xorout(sp),
+      lookup,
+      prev
+    )
   else:
-    crcLutArrCtLeft(data, sp.init, sp.xorout, 0xFFFF'u32, 8, lookup, prev)
+    crcLutArrCtLeft(
+      data,
+      crcspec.init(sp),
+      crcspec.xorout(sp),
+      0xFFFF'u32,
+      8,
+      lookup,
+      prev
+    )
 
 template crcLut*(data: string, kind: Crc16Kind, lookup: LookupLut): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
-    const ri = rev16b(sp.init)
-    crcLutStrCtRight(data, ri, sp.xorout, lookup)
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
+    const ri = revxbits.rev16b(crcspec.init(sp))
+    crcLutStrCtRight(
+      data,
+      ri,
+      crcspec.xorout(sp),
+      lookup
+    )
   else:
-    crcLutStrCtLeft(data, sp.init, sp.xorout, 0xFFFF'u32, 8, lookup)
+    crcLutStrCtLeft(
+      data,
+      crcspec.init(sp),
+      crcspec.xorout(sp),
+      0xFFFF'u32,
+      8,
+      lookup
+    )
 
 template crcLut*(data: openArray[byte], kind: Crc32Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
-    const ri = rev32b(sp.init)
-    crcLutArrCtRight(data, ri, sp.xorout, lookup, prev)
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
+    const ri = revxbits.rev32b(crcspec.init(sp))
+    crcLutArrCtRight(
+      data,
+      ri,
+      crcspec.xorout(sp),
+      lookup,
+      prev
+    )
   else:
-    crcLutArrCtLeft(data, sp.init, sp.xorout, 0xFFFF_FFFF'u32, 24, lookup, prev)
+    crcLutArrCtLeft(
+      data,
+      crcspec.init(sp),
+      crcspec.xorout(sp),
+      0xFFFF_FFFF'u32,
+      24,
+      lookup,
+      prev
+    )
 
 template crcLut*(data: string, kind: Crc32Kind, lookup: LookupLut,
                  prev: uint32 = 0): uint32 =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
-    const ri = rev32b(sp.init)
-    crcLutStrCtRight(data, ri, sp.xorout, lookup)
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
+    const ri = revxbits.rev32b(crcspec.init(sp))
+    crcLutStrCtRight(
+      data,
+      ri,
+      crcspec.xorout(sp),
+      lookup
+    )
   else:
-    crcLutStrCtLeft(data, sp.init, sp.xorout, 0xFFFF_FFFF'u32, 24, lookup)
+    crcLutStrCtLeft(
+      data,
+      crcspec.init(sp),
+      crcspec.xorout(sp),
+      0xFFFF_FFFF'u32,
+      24,
+      lookup
+    )
 
 # rt:
 func crcLut*(data: openArray[byte], spec: CrcSpec, lookup: LookupLut,

@@ -75,34 +75,43 @@ func lutAllLeft(spec: CrcSpec): LookupLut =
 #----------------------------------- Public -----------------------------------#
 
 template initLookup*(kind: Crc8Kind): LookupLut =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev8b(sp.init)
-      rp = rev8b(sp.poly)
+      ri = revxbits.rev8b(crcspec.init(sp))
+      rp = revxbits.rev8b(crcspec.poly(sp))
     lutCtRight(ri, rp)
   else:
-    lutCtLeft8(sp.init, sp.poly)
+    lutCtLeft8(
+      crcspec.init(sp),
+      crcspec.poly(sp)
+    )
 
 template initLookup*(kind: Crc16Kind): LookupLut =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev16b(sp.init)
-      rp = rev16b(sp.poly)
+      ri = revxbits.rev16b(crcspec.init(sp))
+      rp = revxbits.rev16b(crcspec.poly(sp))
     lutCtRight(ri, rp)
   else:
-    lutCtLeft16(sp.init, sp.poly)
+    lutCtLeft16(
+      crcspec.init(sp),
+      crcspec.poly(sp)
+    )
 
 template initLookup*(kind: Crc32Kind): LookupLut =
-  const sp = takeCrcSpec(kind)
-  when sp.refin:
+  const sp = crcbook.takeCrcSpec(kind)
+  when crcspec.refin(sp):
     const
-      ri = rev32b(sp.init)
-      rp = rev32b(sp.poly)
+      ri = revxbits.rev32b(crcspec.init(sp))
+      rp = revxbits.rev32b(crcspec.poly(sp))
     lutCtRight(ri, rp)
   else:
-    lutCtLeft32(sp.init, sp.poly)
+    lutCtLeft32(
+      crcspec.init(sp),
+      crcspec.poly(sp)
+    )
 
 func initLookup*(spec: CrcSpec): LookupLut =
   if spec.refin:
