@@ -2,9 +2,17 @@ import params/[crcbook, crckinds]
 import crcspec, revxbits
 
 func balanceNeeded*(spec: CrcSpec): bool =
-  if (spec.init xor spec.xorout) > 0'u32:
-    result = true
-  else: result = false
+  if spec.size == 32:
+    when defined(js):
+      if (spec.init xor spec.xorout) < 0'u32: true
+      else: false
+    else:
+      if (spec.init xor spec.xorout) > 0'u32: true
+      else: false
+  else:
+      if (spec.init xor spec.xorout) > 0'u32: true
+      else: false
+
 
 func balanceNeeded*[K: Crc8Kind | Crc16Kind | Crc32Kind](kind: K): bool =
   result = kind.takeCrcSpec.balanceNeeded()

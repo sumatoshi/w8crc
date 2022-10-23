@@ -59,7 +59,7 @@ func bitwiseArrCtLeft32(data: openArray[byte],
   for dat in data:
     let ext:uint32 = dat
     crc = crc xor (ext shl 24)
-    crc.updLeft(0x80000000'u32, poly, 31)
+    crc.updLeft32(0x80000000'u32, poly, 31)
   result = crc xor xorout
 
 func bitwiseStrCtLeft32(data: string,
@@ -67,7 +67,7 @@ func bitwiseStrCtLeft32(data: string,
   var crc = init
   for dat in data:
     crc = crc xor (cast[uint32](dat.ord) shl 24)
-    crc.updLeft(0x80000000'u32, poly, 31)
+    crc.updLeft32(0x80000000'u32, poly, 31)
   result = crc xor xorout
 
 func bitwiseArrAllRight(data: openArray[byte], spec: CrcSpec): uint32 =
@@ -108,10 +108,16 @@ func bitwiseArrAllLeft(data: openArray[byte], spec: CrcSpec): uint32 =
     tothemoon = 7
   var crc = spec.init shl polSlip
   let mask = 0xFFFFFFFF'u32 shr (32 - spec.size)
-  for dat in data:
-    let ext:uint32 = dat
-    crc = crc xor (ext shl datSlip)
-    crc.updLeft(msb, pol, tothemoon)
+  if spec.size == 32:
+    for dat in data:
+      let ext:uint32 = dat
+      crc = crc xor (ext shl datSlip)
+      crc.updLeft32(msb, pol, tothemoon)
+  else:
+    for dat in data:
+      let ext:uint32 = dat
+      crc = crc xor (ext shl datSlip)
+      crc.updLeft(msb, pol, tothemoon)
   crc = crc shr polSlip # shr back to mask
   if unlikely(spec.refoutNeeded):
     result = (crc xor spec.xorout).revXb(spec.size) and mask
@@ -135,9 +141,14 @@ func bitwiseStrAllLeft(data: string, spec: CrcSpec): uint32 =
     tothemoon = 7
   var crc = spec.init shl polSlip
   let mask = 0xFFFFFFFF'u32 shr (32 - spec.size)
-  for dat in data:
-    crc = crc xor (cast[uint32](dat.ord) shl datSlip)
-    crc.updLeft(msb, pol, tothemoon)
+  if spec.size == 32:
+    for dat in data:
+      crc = crc xor (cast[uint32](dat.ord) shl datSlip)
+      crc.updLeft32(msb, pol, tothemoon)
+  else:
+    for dat in data:
+      crc = crc xor (cast[uint32](dat.ord) shl datSlip)
+      crc.updLeft(msb, pol, tothemoon)
   crc = crc shr polSlip # shr back to mask
   if unlikely(spec.refoutNeeded):
     result = (crc xor spec.xorout).revXb(spec.size) and mask
