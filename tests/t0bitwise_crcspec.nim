@@ -5,6 +5,8 @@ import algobitwise, crcspec
 
 import unittest
 
+import checkhelper
+
 suite "crcbitwise_crcspec(string)=check":
   setup:
     let dstr = "123456789"
@@ -12,22 +14,26 @@ suite "crcbitwise_crcspec(string)=check":
   test "crc8":
     for kind in Crc8Kind:
       let (res, check) = (dstr.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0
   
   test "crc16":
     for kind in Crc16Kind:
       let (res, check) = (dstr.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0
   
   test "crc32":
     for kind in Crc32Kind:
       let (res, check) = (dstr.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0
 
   test "crc++":
     for kind in CrcPlusKind:
       let (res, check) = (dstr.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0
 
 suite "crcbitwise_crcspec(byte)=check":
   setup:
@@ -36,19 +42,23 @@ suite "crcbitwise_crcspec(byte)=check":
   test "crc8":
     for kind in Crc8Kind:
       let (res, check) = (d8.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0
 
   test "crc16":
     for kind in Crc16Kind:
       let (res, check) = (d8.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0
 
   test "crc32":
     for kind in Crc32Kind:
       let (res, check) = (d8.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0
 
   test "crc++":
     for kind in CrcPlusKind:
       let (res, check) = (d8.crcBitwise(kind.takeCrcSpec), kind.takeCrcSpec.check)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      printResult(kind, res, check)
+      check (res xor check) == 0

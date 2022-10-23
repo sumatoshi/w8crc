@@ -5,31 +5,39 @@ import algolut, crcspec, initlookups
 
 import unittest
 
+import checkhelper
+
 ## Check lut algo
 
 let dstr = "123456789"
 
 proc testlines(kind: static Crc8Kind) =
   let (res, check) = (dstr.crcLut(kind, kind.initLookup), kind.takeCrcSpec.check)
-  check $kind & ":=" & $res == $kind & ":=" & $check
+  printResult(kind, res, check)
+  check (res xor check) == 0
 proc testlines(kind: static Crc16Kind) =
   let (res, check) = (dstr.crcLut(kind, kind.initLookup), kind.takeCrcSpec.check)
-  check $kind & ":=" & $res == $kind & ":=" & $check
+  printResult(kind, res, check)
+  check (res xor check) == 0
 proc testlines(kind: static Crc32Kind) =
   let (res, check) = (dstr.crcLut(kind, kind.initLookup), kind.takeCrcSpec.check)
-  check $kind & ":=" & $res == $kind & ":=" & $check
+  printResult(kind, res, check)
+  check (res xor check) == 0
 
 let d8 = @[0x31'u8, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39]
 
 proc testbytes(kind: static Crc8Kind) =
   let (res, check) = (d8.crcLut(kind, kind.initLookup), kind.takeCrcSpec.check)
-  check $kind & ":=" & $res == $kind & ":=" & $check
+  printResult(kind, res, check)
+  check (res xor check) == 0
 proc testbytes(kind: static Crc16Kind) =
   let (res, check) = (d8.crcLut(kind, kind.initLookup), kind.takeCrcSpec.check)
-  check $kind & ":=" & $res == $kind & ":=" & $check
+  printResult(kind, res, check)
+  check (res xor check) == 0
 proc testbytes(kind: static Crc32Kind) =
   let (res, check) = (d8.crcLut(kind, kind.initLookup), kind.takeCrcSpec.check)
-  check $kind & ":=" & $res == $kind & ":=" & $check
+  printResult(kind, res, check)
+  check (res xor check) == 0
 
 suite "crclut_crckind(string)=check":
   test "crc8":

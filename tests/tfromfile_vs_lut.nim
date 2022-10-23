@@ -45,7 +45,7 @@ suite "crcfromfile(lookup)=crclut(lookup)":
       let
         res = fname.crcFromFile(spec, lookup)
         check = bigdat.crcLut(spec, spec.initLookup)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      check (res xor check) == 0
 
   test "crc16":
     for kind in Crc16Kind:
@@ -55,7 +55,7 @@ suite "crcfromfile(lookup)=crclut(lookup)":
       let
         res = fname.crcFromFile(spec, lookup)
         check = bigdat.crcLut(spec, lookup)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      check (res xor check) == 0
 
 
   test "crc32":
@@ -66,7 +66,7 @@ suite "crcfromfile(lookup)=crclut(lookup)":
       let
         res = fname.crcFromFile(spec, lookup)
         check = bigdat.crcLut(spec, lookup)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      check (res xor check) == 0
 
   test "crc++":
     for kind in CrcPlusKind:
@@ -76,7 +76,7 @@ suite "crcfromfile(lookup)=crclut(lookup)":
       let
         res = fname.crcFromFile(spec, lookup)
         check = bigdat.crcLut(spec, lookup)
-      check $kind & ":=" & $res == $kind & ":=" & $check
+      check (res xor check) == 0
 
   if fname.fileExists:
       fname.removeFile

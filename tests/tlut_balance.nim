@@ -1,9 +1,11 @@
 {.used.}
 
 import params/[crckinds, crcbook, crckindsplus, crcbookplus]
-import algolut, halfcrcs, initlookups
+import algolut, halfcrcs, initlookups, crcspec
 
 import std/[unittest, random]
+
+import checkhelper
 
 suite "crclut_crcspec(prev > 0)->balance???":
   ## 1. Check the calculation of the crc by parts 
@@ -36,7 +38,8 @@ suite "crclut_crcspec(prev > 0)->balance???":
         spec.balance(r3)
         var r4 = part4.crcLut(spec, lookup, prev = r3)
         let (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0
       else:
         let
           lookup = spec.initLookup()
@@ -45,7 +48,8 @@ suite "crclut_crcspec(prev > 0)->balance???":
           r3 = part3.crcLut(spec, lookup, prev = r2)
           r4 = part4.crcLut(spec, lookup, prev = r3)
           (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0
 
   test "crc16":
     for kind in Crc16Kind:
@@ -60,7 +64,8 @@ suite "crclut_crcspec(prev > 0)->balance???":
         spec.balance(r3)
         var r4 = part4.crcLut(spec, lookup, prev = r3)
         let (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0
       else:
         let
           lookup = spec.initLookup()
@@ -69,7 +74,8 @@ suite "crclut_crcspec(prev > 0)->balance???":
           r3 = part3.crcLut(spec, lookup, prev = r2)
           r4 = part4.crcLut(spec, lookup, prev = r3)
           (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0
 
   test "crc32":
     for kind in Crc32Kind:
@@ -84,7 +90,8 @@ suite "crclut_crcspec(prev > 0)->balance???":
         spec.balance(r3)
         var r4 = part4.crcLut(spec, lookup, prev = r3)
         let (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0
       else:
         let
           lookup = spec.initLookup()
@@ -93,13 +100,14 @@ suite "crclut_crcspec(prev > 0)->balance???":
           r3 = part3.crcLut(spec, lookup, prev = r2)
           r4 = part4.crcLut(spec, lookup, prev = r3)
           (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0
 
   test "crc++":
     for kind in CrcPlusKind:
       if kind == crc12Umts:
-        echo "  crc12Umts not in boat! (need additional bit reversing)"
-        # additional refouts also break partitioning
+        # crc12Umts not in boat! (need additional bit reversing)
+        # additional refouts also break partitioning.
         continue
       let spec = kind.takeCrcSpec()
       if spec.balanceNeeded:
@@ -112,7 +120,8 @@ suite "crclut_crcspec(prev > 0)->balance???":
         spec.balance(r3)
         var r4 = part4.crcLut(spec, lookup, prev = r3)
         let (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0
       else:
         let
           lookup = spec.initLookup()
@@ -121,4 +130,5 @@ suite "crclut_crcspec(prev > 0)->balance???":
           r3 = part3.crcLut(spec, lookup, prev = r2)
           r4 = part4.crcLut(spec, lookup, prev = r3)
           (res, check) = (r4, bigdat.crcLut(spec, lookup))
-        check $kind & ":=" & $res == $kind & ":=" & $check
+        printResult(kind, res, check)
+        check (res xor check) == 0

@@ -5,6 +5,8 @@ import crcspec, checkautoval
 
 import unittest
 
+import checkhelper
+
 suite "initcrcspec_nocheck=check":
 
   test "crc16Gsm":
@@ -19,7 +21,8 @@ suite "initcrcspec_nocheck=check":
       xorout = 0xffff'u32
       #check = 0xce3c'u32
     ).check
-    check $crc16Gsm & ":=" & $res == $crc16Gsm & ":=" & $check
+    printResult(crc16Gsm, res, check)
+    check (res xor check) == 0
 
   test "crc32Cksum":
     let res  = crc32Cksum.takeCrcSpec.check
@@ -33,7 +36,8 @@ suite "initcrcspec_nocheck=check":
       xorout = 0xffffffff'u32
       #check = 0x765e7680'u32
     ).check
-    check $crc32Cksum & ":=" & $res == $crc32Cksum & ":=" & $check
+    printResult(crc32Cksum, res, check)
+    check (res xor check) == 0
 
   test "crc12Umts":
     let res  = crc12Umts.takeCrcSpec.check
@@ -47,4 +51,5 @@ suite "initcrcspec_nocheck=check":
       xorout = 0x000'u32
       #check = 0xdaf'u32
     ).check
-    check $crc12Umts & ":=" & $res == $crc12Umts & ":=" & $check
+    printResult(crc12Umts, res, check)
+    check (res xor check) == 0
